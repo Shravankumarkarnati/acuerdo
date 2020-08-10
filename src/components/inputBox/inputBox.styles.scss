@@ -1,0 +1,68 @@
+@import "../../utils/variables.scss";
+
+.inputBox {
+    margin-left: auto;
+    margin-right: 5rem;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: $color-white;
+    border: 2px solid $color-black;
+    padding: 1rem;
+    border-radius: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    &:focus-within {
+        border: 2px solid $color-blue;
+    }
+
+    &-svg {
+        padding: .5rem;
+        width: 3rem;
+        height: 3rem;
+    }
+
+    &-input {
+        font-size: 2rem;
+        background: $color-white;
+        color: $color-black;
+        height: calc(100%-4px);
+        padding: .5rem;
+
+        &,
+        &:hover,
+        &:active,
+        &:focus {
+            outline: none;
+            border: 0;
+        }
+    }
+
+    &-btn {
+        height: 100%;
+        background: $color-white;
+
+        &,
+        &:hover,
+        &:active,
+        &:focus {
+            outline: none;
+            border: 0;
+        }
+
+        &:hover {
+            & svg {
+                fill: $color-blue;
+            }
+        }
+
+        & svg {
+            width: 3rem;
+            height: 3rem;
+            fill: $color-black;
+        }
+    }
+}
