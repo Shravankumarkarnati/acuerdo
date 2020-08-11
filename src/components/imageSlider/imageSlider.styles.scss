@@ -1,0 +1,106 @@
+@import "../../utils/variables.scss";
+
+.slider {
+    height: 80vh;
+    width: 100%;
+
+    &-container {
+        position: relative;
+        height: 100%;
+        width: 100%;
+    }
+
+    &-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 4rem;
+        height: 4rem;
+        opacity: .4;
+        padding: .5rem;
+        transition: all .2s;
+        z-index: 10;
+
+        &,
+        &:hover,
+        &:active,
+        &:focus {
+            border: 0;
+            outline: none;
+        }
+
+        &:hover {
+            opacity: 1;
+        }
+
+        &--prev {
+            left: 4rem;
+        }
+
+        &--next {
+            right: 4rem;
+        }
+
+        & svg {
+            width: 100%;
+            height: 100%;
+            fill: $color-black;
+        }
+    }
+
+    &-main {
+        height: 100%;
+        width: 100%;
+
+        & .slide {
+            z-index: 9;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba($color-white, .2);
+
+            &-container {
+                margin: 10rem 20rem;
+                color: $color-black;
+            }
+
+            &-title {
+                font-size: 8rem;
+                text-transform: uppercase;
+                font-weight: 900;
+                letter-spacing: .3rem;
+            }
+
+            &-tagline {
+                font-size: 4rem;
+                font-family: $font-secondary;
+                text-transform: capitalize;
+            }
+
+            &-btn {
+                font-size: 2.5rem;
+                text-transform: capitalize;
+                font-weight: 600;
+                padding: 1rem 2rem;
+                border-radius: 1rem;
+                background-color: $color-blue;
+                color: $color-white;
+                opacity: .5;
+
+                &,
+                &:hover,
+                &:active,
+                &:focus {
+                    border: 0;
+                    outline: none;
+                }
+
+                &:hover {
+                    opacity: .9;
+                }
+            }
+        }
+    }
+}
