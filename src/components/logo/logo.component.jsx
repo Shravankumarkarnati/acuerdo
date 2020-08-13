@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { useHistory } from "react-router-dom";
 
 const LogoStyled = styled.div`
   cursor: pointer;
@@ -24,8 +25,12 @@ const LogoStyled = styled.div`
 `;
 
 const LogoMain = ({ logoColor }) => {
+  const history = useHistory();
+  const handleLogoClick = () => {
+    history.push("/");
+  };
   return (
-    <LogoStyled logoColor={logoColor}>
+    <LogoStyled logoColor={logoColor} onClick={handleLogoClick}>
       <svg
         width="243"
         height="76"

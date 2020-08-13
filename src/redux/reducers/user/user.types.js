@@ -1,0 +1,9 @@
+const userTypes = {
+  USER_LOGIN: "USER_LOGIN",
+  LOGIN_START: "LOGIN_START",
+  LOGIN_SUCCESS: "LOGIN_SUCCESS",
+  LOGIN_FAILED: "LOGIN_FAILED",
+  USER_LOGOUT: "USER_LOGOUT",
+};
+
+export default userTypes;

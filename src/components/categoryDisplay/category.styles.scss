@@ -11,7 +11,8 @@
     display: grid;
     width: 100%;
     padding: 5rem 2rem;
-    grid-template-columns: repeat(auto-fit, 50rem);
+    grid-template-columns: repeat(auto-fit, 40rem);
     grid-auto-rows: 30rem;
     grid-gap: 3rem;
+    justify-content: center;
 }
