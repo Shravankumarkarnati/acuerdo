@@ -29,6 +29,13 @@ const userReducer = (state = INITIAL_STATE, action) => {
         status: false,
         user: null,
       };
+    case userTypes.USER_LOGOUT:
+      return {
+        ...state,
+        uer: null,
+        status: false,
+        isWorking: false,
+      };
     default:
       return state;
   }

@@ -1,7 +1,13 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
 
-import { BodyMain, PlaceHolder, Login, CreateAccount } from "./proxy";
+import {
+  BodyMain,
+  PlaceHolder,
+  Login,
+  CreateAccount,
+  AccountPage,
+} from "./proxy";
 
 const Body = () => {
   return (
@@ -17,6 +23,9 @@ const Body = () => {
       </Route>
       <Route path="/create-account">
         <CreateAccount />
+      </Route>
+      <Route path="/account">
+        <AccountPage />
       </Route>
     </Switch>
   );

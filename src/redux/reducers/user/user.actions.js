@@ -24,6 +24,12 @@ const userLoginSuccess = (user) => {
   };
 };
 
+export const userLogout = (user) => {
+  return {
+    type: userTypes.USER_LOGOUT,
+  };
+};
+
 export const createUserWithEmailAndPasswordAsync = (data) => {
   return (dispatch) => {
     dispatch(userLoginStart());

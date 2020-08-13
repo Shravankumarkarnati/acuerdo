@@ -3,6 +3,7 @@ import BodyMain from "../components/bodyMain/bodyMain.components";
 import Login from "../components/login/login.component";
 import CreateAccount from "../components/createAccount/createAccount.component";
 import { useParams } from "react-router-dom";
+import AccountPage from "./account.page";
 
 const PlaceHolder = () => {
   const { cat } = useParams();
@@ -13,4 +14,4 @@ const PlaceHolder = () => {
   );
 };
 
-export { BodyMain, PlaceHolder, Login, CreateAccount };
+export { BodyMain, PlaceHolder, Login, CreateAccount, AccountPage };

@@ -22,7 +22,7 @@ const HeaderOptions = () => {
         </span>
         <FaShoppingCart />
       </button>
-      <button onClick={() => history.push("/login")}>
+      <button onClick={() => history.push("/account")}>
         <BsFillPersonFill title="Your Account" />
       </button>
     </div>
