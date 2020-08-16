@@ -2,6 +2,8 @@ import React from "react";
 import "./category.styles.scss";
 import styled from "styled-components";
 import { withRouter } from "react-router";
+import { connect } from "react-redux";
+import { fetchResultsAsync } from "../../redux/reducers/results/results.actions";
 
 const CategoryStyled = styled.div`
   border: 4px solid ${(props) => props.theme.colorBlack};
@@ -63,9 +65,18 @@ const categories = [
   "Toys",
 ];
 
-const CategoryDisplay = ({ history }) => {
+const CategoryDisplay = ({
+  history,
+  fetchCategoryResults,
+  results,
+  currentCategory,
+}) => {
   const handleCategoryClick = (cat) => {
-    history.push(`/category/${cat.toLowerCase()}`);
+    const category = cat.toLowerCase();
+    history.push(`/category/${category}`);
+    if (!(currentCategory === category && results.length)) {
+      fetchCategoryResults(category);
+    }
   };
   return (
     <div className="categories">
@@ -89,4 +100,19 @@ const CategoryDisplay = ({ history }) => {
   );
 };
 
-export default withRouter(CategoryDisplay);
+const mapStateToProps = (state) => {
+  return {
+    currentCategory: state.results.category,
+    results: state.results.results,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchCategoryResults: (cat) => dispatch(fetchResultsAsync(cat)),
+  };
+};
+
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(CategoryDisplay)
+);

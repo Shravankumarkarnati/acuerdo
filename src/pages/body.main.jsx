@@ -3,10 +3,10 @@ import { Switch, Route } from "react-router-dom";
 
 import {
   BodyMain,
-  PlaceHolder,
   Login,
   CreateAccount,
   AccountPage,
+  Categorypage,
 } from "./proxy";
 
 const Body = () => {
@@ -16,7 +16,7 @@ const Body = () => {
         <BodyMain />
       </Route>
       <Route path="/category/:cat">
-        <PlaceHolder />
+        <Categorypage />
       </Route>
       <Route path="/login">
         <Login />
