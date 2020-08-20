@@ -5,6 +5,7 @@ const INITIAL_STATE = {
   results: null,
   category: null,
   error: null,
+  selectedItem: null,
 };
 
 const resultsReducer = (state = INITIAL_STATE, action) => {
@@ -34,6 +35,11 @@ const resultsReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         results: action.payload,
+      };
+    case resultsTypes.SELECTED_ITEM:
+      return {
+        ...state,
+        selectedItem: { ...action.payload },
       };
     default:
       return state;

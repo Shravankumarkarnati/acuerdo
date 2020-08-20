@@ -7,6 +7,7 @@ import {
   CreateAccount,
   AccountPage,
   Categorypage,
+  ProductPage,
 } from "./proxy";
 
 const Body = () => {
@@ -26,6 +27,9 @@ const Body = () => {
       </Route>
       <Route path="/account">
         <AccountPage />
+      </Route>
+      <Route path="/product/:pId">
+        <ProductPage />
       </Route>
     </Switch>
   );

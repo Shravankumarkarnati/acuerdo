@@ -3,6 +3,9 @@ import "./resultsCard.styles.scss";
 import { FaRegHeart } from "react-icons/fa";
 // FaHeart
 import { useHistory } from "react-router-dom";
+import { selectedItem } from "../../redux/reducers/results/results.actions";
+
+import { connect } from "react-redux";
 
 const wordShortner = (word) => {
   let wordShortDashed = word;
@@ -22,7 +25,7 @@ const wordShortner = (word) => {
   return wordShort;
 };
 
-const ResultsCard = ({ result }) => {
+const ResultsCard = ({ result, selectItemDispatch, selectedItemState }) => {
   const history = useHistory();
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -30,6 +33,18 @@ const ResultsCard = ({ result }) => {
 
   const handleCardClick = (res, res_id) => {
     history.push(`/product/${res_id}`);
+    const { id: stateId } = res;
+    if (selectedItemState) {
+      if (!(selectedItemState.id === stateId)) {
+        selectItemDispatch(res);
+      }
+    } else {
+      selectItemDispatch(res);
+    }
+  };
+
+  const liked = (e, res) => {
+    e.stopPropagation();
     console.log(res);
   };
 
@@ -39,7 +54,8 @@ const ResultsCard = ({ result }) => {
   return (
     <div className="card" onClick={() => handleCardClick(result, id)}>
       <div className="card--image">
-        <img src={image_url} alt={product_name} />
+        <img className="card--image-img" src={image_url} alt={product_name} />
+        <button className="card--image-view">View</button>
       </div>
       <div className="card--details">
         <p className="card--details-name">{wordShortner(product_name)}</p>
@@ -51,7 +67,12 @@ const ResultsCard = ({ result }) => {
       </div>
       <div className="card--btns">
         <button className="card--btns-buy">Add to cart</button>
-        <span className="card--btns-like">
+        <span
+          className="card--btns-like"
+          onClick={(e) => {
+            liked(e, result);
+          }}
+        >
           <FaRegHeart />
         </span>
       </div>
@@ -59,13 +80,16 @@ const ResultsCard = ({ result }) => {
   );
 };
 
-export default ResultsCard;
+const mapStateToProps = (state) => {
+  return {
+    selectedItemState: state.results.selectedItem,
+  };
+};
 
-// available: false
-// brand: "Ullrich-Weissnat"
-// category: "Games"
-// gender: "Female"
-// id: 92
-// price: "$447.38"
-// product_name: "impactful"
-// size: "S"
+const mapDispatchToProps = (dispatch) => {
+  return {
+    selectItemDispatch: (item) => dispatch(selectedItem(item)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ResultsCard);

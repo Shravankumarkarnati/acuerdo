@@ -52,3 +52,10 @@ export const fetchResultsAsync = (cat) => {
     }
   };
 };
+
+export const selectedItem = (res) => {
+  return {
+    type: resultsTypes.SELECTED_ITEM,
+    payload: res,
+  };
+};
