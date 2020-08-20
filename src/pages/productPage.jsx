@@ -1,22 +1,42 @@
 import React from "react";
 import "./productPage.styles.scss";
 
+import {
+  addItemToCart,
+  removeItemFromCart,
+} from "../redux/reducers/cart/cart.actions";
+
+import {
+  addToWishList,
+  removeFromWishList,
+} from "../redux/reducers/wishlist/wishlist.actions";
+
 import { connect } from "react-redux";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 import { GrNext, GrPrevious } from "react-icons/gr";
-const ProductPage = ({ productDetails }) => {
+
+const ProductPage = ({
+  productDetails,
+  cartItems,
+  wishlistItems,
+  addToCart,
+  addToWishList,
+  removeFromCart,
+  removeFromWishList,
+}) => {
   const {
     // available,
     brand,
-    category,
+    // category,
     // gender,
-    // id,
+    id,
     price,
     product_name,
     size,
   } = productDetails;
   const rating = Math.floor(Math.random() * 5) + 1;
-  console.log(rating);
+  const reviewNumbers = Math.floor(Math.random() * 1000) + 1;
+  const activePic = 1;
   return (
     <div className="product-page">
       <div className="product">
@@ -34,10 +54,10 @@ const ProductPage = ({ productDetails }) => {
             <GrNext />
           </button>
           <div className="product--slider-dotter">
-            <span className="dot"></span>
-            <span className="dot"></span>
-            <span className="dot"></span>
-            <span className="dot"></span>
+            <span className={activePic === 1 ? "dot active" : "dot"}></span>
+            <span className={activePic === 2 ? "dot active" : "dot"}></span>
+            <span className={activePic === 3 ? "dot active" : "dot"}></span>
+            <span className={activePic === 4 ? "dot active" : "dot"}></span>
           </div>
         </div>
         <div className="product--details">
@@ -49,7 +69,9 @@ const ProductPage = ({ productDetails }) => {
             </p>
           </div>
           <div className="product--rating">
-            <div className="product--rating-number"></div>
+            <div className="product--rating-number">
+              {reviewNumbers} Reviews
+            </div>
             <div className="product--rating-star">
               {[0, 1, 2, 3, 4].map((cur) =>
                 cur < rating ? (
@@ -142,8 +164,30 @@ const ProductPage = ({ productDetails }) => {
           </div>
           <div className="product--buttons">
             <button className="buy-now">Buy Now</button>
-            <button className="add-cart">Add to cart</button>
-            <button className="save">Add to wishlist</button>
+            {!(id in cartItems) ? (
+              <button
+                className="add-cart"
+                onClick={() => addToCart(productDetails)}
+              >
+                Add to cart
+              </button>
+            ) : (
+              <button className="add-cart" onClick={() => removeFromCart(id)}>
+                Remove From cart
+              </button>
+            )}
+            {!(id in wishlistItems) ? (
+              <button
+                className="save"
+                onClick={() => addToWishList(productDetails)}
+              >
+                Add to wishlist
+              </button>
+            ) : (
+              <button className="save" onClick={() => removeFromWishList(id)}>
+                Remove from wishlist
+              </button>
+            )}
           </div>
         </div>
       </div>
@@ -163,7 +207,18 @@ const ProductPage = ({ productDetails }) => {
 const mapStateToProps = (state) => {
   return {
     productDetails: state.results.selectedItem,
+    cartItems: state.cart.items,
+    wishlistItems: state.wishlist.items,
   };
 };
 
-export default connect(mapStateToProps)(ProductPage);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addToCart: (item) => dispatch(addItemToCart(item)),
+    removeFromCart: (id) => dispatch(removeItemFromCart(id)),
+    addToWishList: (item) => dispatch(addToWishList(item)),
+    removeFromWishList: (id) => dispatch(removeFromWishList(id)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProductPage);

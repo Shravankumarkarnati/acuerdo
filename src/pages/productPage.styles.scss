@@ -71,6 +71,32 @@
         &-next {
             right: 0;
         }
+
+        &-dotter {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            & .dot {
+                width: 1rem;
+                height: 1rem;
+                background: $color-white;
+                opacity: .4;
+                border-radius: 50%;
+                margin: 0 .3rem;
+                transition: all .2s;
+
+                &.active {
+                    opacity: .9;
+                    width: 2rem;
+                    border-radius: .5rem;
+                }
+            }
+        }
     }
 
     &--details {
@@ -105,10 +131,13 @@
     &--rating {
         display: flex;
         align-items: center;
-        justify-content: flex-start;
+        justify-content: flex-end;
+        flex-direction: row-reverse;
 
         &-number {
             font-size: 1.6rem;
+            margin-left: 4rem;
+            text-decoration: underline;
         }
 
         &-star svg {
@@ -143,7 +172,10 @@
             cursor: pointer;
             font-size: 2rem;
             padding: 1rem 2rem;
-            border-right: 2px solid grey;
+
+            &:not(:last-child) {
+                border-right: 2px solid grey;
+            }
 
             &.active {
                 background-color: $color-blue;

@@ -1,11 +1,21 @@
 import React, { useEffect } from "react";
 import "./resultsCard.styles.scss";
-import { FaRegHeart } from "react-icons/fa";
-// FaHeart
+import { FaRegHeart, FaHeart } from "react-icons/fa";
+
 import { useHistory } from "react-router-dom";
 import { selectedItem } from "../../redux/reducers/results/results.actions";
 
 import { connect } from "react-redux";
+
+import {
+  addItemToCart,
+  removeItemFromCart,
+} from "../../redux/reducers/cart/cart.actions";
+
+import {
+  addToWishList,
+  removeFromWishList,
+} from "../../redux/reducers/wishlist/wishlist.actions";
 
 const wordShortner = (word) => {
   let wordShortDashed = word;
@@ -25,7 +35,17 @@ const wordShortner = (word) => {
   return wordShort;
 };
 
-const ResultsCard = ({ result, selectItemDispatch, selectedItemState }) => {
+const ResultsCard = ({
+  result,
+  selectItemDispatch,
+  selectedItemState,
+  cartItems,
+  wishlistItems,
+  addToCart,
+  addToWishList,
+  removeFromCart,
+  removeFromWishList,
+}) => {
   const history = useHistory();
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -45,7 +65,11 @@ const ResultsCard = ({ result, selectItemDispatch, selectedItemState }) => {
 
   const liked = (e, res) => {
     e.stopPropagation();
-    console.log(res);
+    if (id in wishlistItems) {
+      removeFromWishList(res.id);
+    } else {
+      addToWishList(res);
+    }
   };
 
   const { brand, category, price, product_name, id } = result;
@@ -66,14 +90,34 @@ const ResultsCard = ({ result, selectItemDispatch, selectedItemState }) => {
         </p>
       </div>
       <div className="card--btns">
-        <button className="card--btns-buy">Add to cart</button>
+        {!(id in cartItems) ? (
+          <button
+            className="card--btns-buy"
+            onClick={(e) => {
+              e.stopPropagation();
+              addToCart(result);
+            }}
+          >
+            Add to cart
+          </button>
+        ) : (
+          <button
+            className="card--btns-buy"
+            onClick={(e) => {
+              e.stopPropagation();
+              removeFromCart(id);
+            }}
+          >
+            Remove From cart
+          </button>
+        )}
         <span
           className="card--btns-like"
           onClick={(e) => {
             liked(e, result);
           }}
         >
-          <FaRegHeart />
+          {id in wishlistItems ? <FaHeart /> : <FaRegHeart />}
         </span>
       </div>
     </div>
@@ -83,12 +127,18 @@ const ResultsCard = ({ result, selectItemDispatch, selectedItemState }) => {
 const mapStateToProps = (state) => {
   return {
     selectedItemState: state.results.selectedItem,
+    wishlistItems: state.wishlist.items,
+    cartItems: state.cart.items,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     selectItemDispatch: (item) => dispatch(selectedItem(item)),
+    addToCart: (item) => dispatch(addItemToCart(item)),
+    removeFromCart: (id) => dispatch(removeItemFromCart(id)),
+    addToWishList: (item) => dispatch(addToWishList(item)),
+    removeFromWishList: (id) => dispatch(removeFromWishList(id)),
   };
 };
 
